@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class ChangeCamera : MonoBehaviour
 {
-    public GameObject mainCamera;
-    public GameObject followCamera;
+    public Camera Camera1;
+    public Camera Camera2;
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
-        {
-            //Destroy(GameObject.Find("camChange").gameObject);
-            mainCamera.SetActive(false);
-        }
+        Camera1.enabled = false;
+        Camera2.enabled = true;
     }
 }

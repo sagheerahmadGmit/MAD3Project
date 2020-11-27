@@ -6,7 +6,7 @@ using UnityEngine;
 public class EndlessLevel : MonoBehaviour
 {
     public List<GameObject> roads;
-    public float offset = 60f;
+    public float offset = 243.8652f;
 
     void Start()
     {

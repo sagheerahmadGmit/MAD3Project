@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-    public SpawnManager spawn;
-
     //class setup so its easier to make the variables more serialiazable
 	[System.Serializable]
 	public class MovementSettings{
@@ -161,11 +159,6 @@ public class PlayerController : MonoBehaviour {
         movementSettings.speed = 0;
         //Play death animation
         animator.SetTrigger("Die");
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        spawn.SpawnTriggerEntered();
     }
 
 }
