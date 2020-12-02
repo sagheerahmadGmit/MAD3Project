@@ -44,6 +44,15 @@ public class PlayerController : MonoBehaviour {
     public bool isDead = false;
     private Animator animator;
 
+    //used to show the game over panel
+    public GameObject gameOverUI;
+
+    public bool levelStart = false;
+
+    public float increaseSpeed = 0.1f;
+
+    public AudioClip hitObstacle, gameOverSound;
+
     // Use this for initialization
     void Start()
 	{
@@ -56,13 +65,16 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate()
 	{
-        //call the functions
-        Run();
-        InputHandling();
-        CheckGround();
-        Jump();
-        MoveXAxis();
-        ridgidbody.velocity = velocity;
+        if (levelStart == true)
+        {
+            //call the functions
+            Run();
+            InputHandling();
+            CheckGround();
+            Jump();
+            MoveXAxis();
+            ridgidbody.velocity = velocity;
+        }
     }
               
 	void Run(){
@@ -151,14 +163,39 @@ public class PlayerController : MonoBehaviour {
     }
 
     //when the player dies the player should stop moving and the dying animation plays
-    public void KillPlayer()
+    public void KillPlayer(GameObject enemy)
     {
+        LevelManager.instance.gameObject.GetComponent<AudioSource>().PlayOneShot(hitObstacle, 1);
+        //LevelManager.instance.gameObject.GetComponent<AudioSource>().clip = gameOverSound;
+        //LevelManager.instance.gameObject.GetComponent<AudioSource>().Play();
+
+        //save the score
+        LevelManager.instance.SaveScore();
+
         //player is dead
         isDead = true;
         //player stops moving
         movementSettings.speed = 0;
         //Play death animation
         animator.SetTrigger("Die");
+        gameOverUI.GetComponent<Animator>().SetTrigger("show");
+
+        //save the coins
+        LevelManager.instance.SaveCoins();
+
+        //save the distance
+        LevelManager.instance.SaveDistance();
+
+        LevelManager.instance.enemyKill = enemy;
+
+        
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.transform.tag == "coin") {
+            Destroy(hit.gameObject);
+        }
     }
 
 }

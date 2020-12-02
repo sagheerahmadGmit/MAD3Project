@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    public AudioSource coinAudio;
+    public AudioClip pickup;
 
     void OnTriggerEnter(Collider other)
     {
-        coinAudio.Play();
-        Destroy(this.gameObject);
+        if (other.tag == "Player")
+        {
+            Destroy(this.gameObject);
+            LevelManager.instance.coin++;
+            LevelManager.instance.gameObject.GetComponent<AudioSource>().PlayOneShot(pickup, 1);
+        }
     }
 }

@@ -12,9 +12,8 @@ public class KillPlayer : MonoBehaviour
             //if the player is not dead 
             if (!other.collider.GetComponent<PlayerController>().isDead)
             {
-                //
-                other.collider.GetComponent<PlayerController>().KillPlayer();
-                //LevelManager.instance.KillPlayer(gameObject);
+                //kill the player from the player controller
+                other.collider.GetComponent<PlayerController>().KillPlayer(gameObject);
             }
         }
     }
