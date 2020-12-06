@@ -74,8 +74,7 @@ public class Menu : MonoBehaviour
         // Get Data 
         currentCoins.text = LevelManager.instance.coin.ToString();
         currentDistance.text = LevelManager.instance.distance.ToString();
-        //currentScore.text = ((int)LevelManager.instance.playerScore).ToString();
-        currentScore.text = ((int)ScoreManager.playerScore).ToString();
+        currentScore.text = ((int)LevelManager.instance.playerScore).ToString();
 
         // all time data
         allCoins.text = PlayerPrefs.GetInt("CollectedCoins").ToString();

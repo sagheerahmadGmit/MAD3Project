@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour {
 		public float speed = 10;
         //how high the player jumps
         public float jumpHeight = 18;
-
     }
 
     //class setup so its easier to make the variables more serialiazable
@@ -49,7 +48,7 @@ public class PlayerController : MonoBehaviour {
 
     public bool levelStart = false;
 
-    public float increaseSpeed = 0.1f;
+    public float increaseSpeed = 0.01f;
 
     public AudioClip hitObstacle, gameOverSound;
 
@@ -60,8 +59,7 @@ public class PlayerController : MonoBehaviour {
 		velocity = Vector3.zero;
         animator = GetComponent<Animator>();
     }
-
-
+    
 	// Update is called once per frame
 	void FixedUpdate()
 	{
@@ -84,12 +82,12 @@ public class PlayerController : MonoBehaviour {
     void InputHandling()
     {
         //check if the player presses space to jump
-        if (Input.GetKeyDown(KeyCode.Space)) //jump
+        if (Input.GetKeyDown(KeyCode.Space) || SwipeManager.swipeUp) //jump
         {
             playerJump = 1;
         }
         //check if the player presses d to go right
-        else if (Input.GetKeyDown(KeyCode.D)) //right
+        else if (Input.GetKeyDown(KeyCode.D) || SwipeManager.swipeRight) //right
         {
             //if the position is 0 go to the right 
             if (movementX == 0)
@@ -102,7 +100,7 @@ public class PlayerController : MonoBehaviour {
                 movementX = 0;
             }
         }
-        else if (Input.GetKeyDown(KeyCode.A)) //left
+        else if (Input.GetKeyDown(KeyCode.A) || SwipeManager.swipeLeft) //left
         {
             //if the position is 0 go to the left 
             if (movementX == 0)
@@ -166,8 +164,6 @@ public class PlayerController : MonoBehaviour {
     public void KillPlayer(GameObject enemy)
     {
         LevelManager.instance.gameObject.GetComponent<AudioSource>().PlayOneShot(hitObstacle, 1);
-        //LevelManager.instance.gameObject.GetComponent<AudioSource>().clip = gameOverSound;
-        //LevelManager.instance.gameObject.GetComponent<AudioSource>().Play();
 
         //save the score
         LevelManager.instance.SaveScore();
@@ -187,8 +183,6 @@ public class PlayerController : MonoBehaviour {
         LevelManager.instance.SaveDistance();
 
         LevelManager.instance.enemyKill = enemy;
-
-        
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -197,5 +191,4 @@ public class PlayerController : MonoBehaviour {
             Destroy(hit.gameObject);
         }
     }
-
 }

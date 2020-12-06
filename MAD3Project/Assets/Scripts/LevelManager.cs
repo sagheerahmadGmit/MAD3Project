@@ -7,8 +7,8 @@ public class LevelManager : MonoBehaviour
 {
 
     public GameObject player;
-    //public Text score;
-    //public float playerScore = 0;
+    public Text score;
+    public float playerScore = 0;
 
     private static LevelManager _instance;
     private int framePaused = 0;
@@ -60,27 +60,23 @@ public class LevelManager : MonoBehaviour
     void Update()
     {
         if (player.GetComponent<PlayerController>().levelStart && !isPaused && !player.GetComponent<PlayerController>().isDead) {
-            //playerScore = (Time.frameCount - framePaused - frameStart) / 10f;
-
-            //playerScore = ScoreManager.playerScore -framePaused - frameStart /10f;
-            //score.text = ("SCORE: " + (int)playerScore).ToString();
+            playerScore = Mathf.RoundToInt(player.transform.position.z) / 2;
+            score.text = ("score: " + (int)playerScore).ToString();
+                        
+            distance = Mathf.RoundToInt(player.transform.position.z) / 10;
+            txtDistance.text = distance + " m";
 
             coinText.text = coin.ToString();
             heartText.text = heart.ToString();
 
-            if (ScoreManager.playerScore % distanceFactor == 0)
+            if (distance % 75 == 0)
             {
-                distance += 1;
-                txtDistance.text = distance + " m";
-
                 playerController.movementSettings.speed += playerController.increaseSpeed;
-            }
+            }           
         }
         else if (!isPaused)
         {
-
             framePaused++;
-
         }
         else if (player.GetComponent<PlayerController>().levelStart == false)
         {
@@ -99,9 +95,8 @@ public class LevelManager : MonoBehaviour
             _countinueValue = _countinueValue * 2;
         }
 
-        if (heart >= _countinueValue)
+        if (heart + 1 >= _countinueValue)
         {
-            heart++;
             GameObject.Destroy(enemyKill);
 
             LevelManager.instance.gameObject.GetComponent<AudioSource>().clip = theme;
@@ -110,36 +105,33 @@ public class LevelManager : MonoBehaviour
             player.GetComponent<PlayerController>().isDead = false;
             player.GetComponent<PlayerController>().movementSettings.speed = 10;
             player.GetComponent<Animator>().SetTrigger("run");
+
             // Show Player Canvas 
             playerCanvas.SetActive(true);
             // Hide Game Over Window 
             gameOverUI.GetComponent<Animator>().SetTrigger("hide");
             // Update the CollectedHearts
             heart = heart - _countinueValue;
-
         }
-        //else
-        //{
-        //    Menu.Instance.ShowAchievements();
-        //    playerScore = 0;
-        //}
-
     }
 
     public void SaveScore()
     {
         int HighestScore = PlayerPrefs.GetInt("HighestScore");
-        if (ScoreManager.playerScore > HighestScore)
+        if (playerScore > HighestScore)
         {
-            PlayerPrefs.SetInt("HighestScore", (int)ScoreManager.playerScore);
+            PlayerPrefs.SetInt("HighestScore", (int)playerScore);
         }
     }
 
     public void SaveCoins()
     {
         int CollectedCoins = PlayerPrefs.GetInt("CollectedCoins");
+
         CollectedCoins = coin + CollectedCoins;
+
         PlayerPrefs.SetInt("CollectedCoins", CollectedCoins);
+        
     }
 
     public void SaveDistance()
@@ -147,9 +139,8 @@ public class LevelManager : MonoBehaviour
         int distanceTravelled = PlayerPrefs.GetInt("distanceTravelled");
         if (distance > distanceTravelled)
         {
-            PlayerPrefs.SetInt("HighestScore", (int)ScoreManager.playerScore);
+            PlayerPrefs.SetInt("distanceTravelled", distance);
         }
-
     }
 
     public void StartGame()
@@ -159,12 +150,10 @@ public class LevelManager : MonoBehaviour
         GameObject.Find("MainMenu").SetActive(false);
         playerCanvas.SetActive(true);
 
-        ScoreManager.playerScore = 0;
-
-        Debug.Log("Player score is: " + ScoreManager.playerScore);
+        playerScore = 0;
+        Debug.Log("Player score is: " + (int)playerScore);
 
         LevelManager.instance.gameObject.GetComponent<AudioSource>().clip = theme;
         LevelManager.instance.gameObject.GetComponent<AudioSource>().Play();
     }
-
 }
