@@ -5,14 +5,14 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     //class setup so its easier to make the variables more serialiazable
-	[System.Serializable]
-	public class MovementSettings{
+	//[System.Serializable]
+	//public class MovementSettings{
 
         //how fast is the background moving
-		public float speed = 10;
+		public static float speed = 10;
         //how high the player jumps
         public float jumpHeight = 18;
-    }
+    //}
 
     //class setup so its easier to make the variables more serialiazable
     [System.Serializable]
@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     //call the class variables
-    public MovementSettings movementSettings = new MovementSettings();
+    //public MovementSettings movementSettings = new MovementSettings();
     public PhysicsSettings physicsSettings = new PhysicsSettings();
 
     private Vector3 velocity;
@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour {
     }
               
 	void Run(){
-		velocity.z = movementSettings.speed;
+		velocity.z = speed;
 	}
 
     void InputHandling()
@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (playerJump == 1 && onGround)
         {
-            velocity.y = movementSettings.jumpHeight;
+            velocity.y = jumpHeight;
         }
         else if (playerJump == 0 && onGround)
         {
@@ -171,7 +171,7 @@ public class PlayerController : MonoBehaviour {
         //player is dead
         isDead = true;
         //player stops moving
-        movementSettings.speed = 0;
+        speed = 0;
         //Play death animation
         animator.SetTrigger("Die");
         gameOverUI.GetComponent<Animator>().SetTrigger("show");

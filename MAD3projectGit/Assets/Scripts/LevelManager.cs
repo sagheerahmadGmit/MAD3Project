@@ -87,7 +87,7 @@ public class LevelManager : MonoBehaviour
 
             if ((int)distance % 75 == 0)
             {
-                playerController.movementSettings.speed += playerController.increaseSpeed;
+               PlayerController.speed += playerController.increaseSpeed;
             }           
         }
         else if (!isPaused)
@@ -119,7 +119,8 @@ public class LevelManager : MonoBehaviour
             LevelManager.instance.gameObject.GetComponent<AudioSource>().Play();
 
             player.GetComponent<PlayerController>().isDead = false;
-            player.GetComponent<PlayerController>().movementSettings.speed = 10;
+            //player.GetComponent<PlayerController>().movementSettings.speed = 10;
+            PlayerController.speed = 10;
             player.GetComponent<Animator>().SetTrigger("run");
 
             // Show Player Canvas 
@@ -170,6 +171,7 @@ public class LevelManager : MonoBehaviour
         distance = 0;
         heart = 0;
         coin = 0;
+        PlayerController.speed = 10;
         //Debug.Log("Player score is: " + (int)playerScore);
 
         LevelManager.instance.gameObject.GetComponent<AudioSource>().clip = theme;
