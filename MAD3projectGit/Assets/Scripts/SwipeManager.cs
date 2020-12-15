@@ -4,27 +4,30 @@ using UnityEngine;
 
 public class SwipeManager : MonoBehaviour
 {
+    //variables used to swipe and tap the screen
     public static bool tap, swipeLeft, swipeRight, swipeUp, swipeDown;
     private bool isDraging = false;
     private Vector2 startTouch, swipeDelta;
 
     private void Update()
     {
+        //set everything to false until screen is tapped or swiped
         tap = swipeDown = swipeUp = swipeLeft = swipeRight = false;
        
+        //if the screen is tapped
         if (Input.GetMouseButtonDown(0))
         {
             tap = true;
             isDraging = true;
             startTouch = Input.mousePosition;
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0))//player lift finger off the screen
         {
             isDraging = false;
             Reset();
         }
-        
-
+        //if the player touches screen for more then 0 seconds
+        //then set tap and dragging to true
         if (Input.touches.Length > 0)
         {
             if (Input.touches[0].phase == TouchPhase.Began)
@@ -72,10 +75,8 @@ public class SwipeManager : MonoBehaviour
                 else
                     swipeUp = true;
             }
-
             Reset();
         }
-
     }
 
     private void Reset()

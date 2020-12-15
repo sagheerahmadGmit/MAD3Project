@@ -3670,7 +3670,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 826, y: -77}
+  m_AnchoredPosition: {x: 822, y: -77}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &793255614
@@ -6212,15 +6212,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpHeight: 18
-  physicsSettings:
-    downAcceleration: 0.75
+  downAcceleration: 0.75
   speedX: 10
   isDead: 0
   gameOverUI: {fileID: 1367809818}
   levelStart: 0
   increaseSpeed: 0.1
   hitObstacle: {fileID: 8300000, guid: b375a7bbf22f28b43b058a8efb7b8175, type: 3}
-  gameOverSound: {fileID: 8300000, guid: 27d5360cb775f544e826e77e59c23bfa, type: 3}
 --- !u!1 &1367809818
 GameObject:
   m_ObjectHideFlags: 0
@@ -7000,19 +6998,20 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: f7508c2b80305714d907f17b4684eb42, type: 3}
-    m_FontSize: 40
+    m_FontSize: 25
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 3
-    m_MaxSize: 40
+    m_MaxSize: 48
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "The aim of the game is to survive \nas long as you can and avoid \nobstacles.
-    The characters name \nis Hamlet who has run away from\nslaughter house."
+  m_Text: "The aim of the game is to survive as long as you can and avoid obstacles.
+    \nThe characters name is Hamlet who has run away from the slaughter \nhouse.
+    You can control the player using  A and D or swiping \non your phone."
 --- !u!222 &1563937447
 CanvasRenderer:
   m_ObjectHideFlags: 0
